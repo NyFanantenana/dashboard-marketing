@@ -7,21 +7,14 @@ st.set_page_config(
     page_title="Executive Marketing Dashboard",
     page_icon="⚡",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Thème Plotly sombre par défaut
 px.defaults.template = "plotly_dark"
 px.defaults.color_continuous_scale = px.colors.sequential.Purples
 
-# Palette de couleurs Neon / Premium
-NEON_PURPLE = "#8B5CF6"
-NEON_BLUE = "#3B82F6"
-NEON_GREEN = "#10B981"
-NEON_ORANGE = "#F59E0B"
-BG_CARD = "#1E293B"
-
-# 2. Styles CSS Personnalisés
+# 2. Styles CSS Personnalisés (Dark Glassmorphism)
 st.markdown("""
 <style>
     /* Fond global */
@@ -84,12 +77,6 @@ st.markdown("""
         border: none !important;
         box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
-    
-    /* Sidebar styling */
-    section[data-testid="stSidebar"] {
-        background-color: #1E293B;
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -125,20 +112,7 @@ df_seg, df_mkt, df_models = load_data()
 st.markdown("<h1 style='font-size: 2.4rem; font-weight: 800; margin-bottom: 0px;'>📊 Marketing & Customer Analytics</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #64748B; font-size: 1rem; margin-bottom: 25px;'>Vue d'ensemble stratégique et segmentation avancée des clients</p>", unsafe_allow_html=True)
 
-# 5. Sidebar
-with st.sidebar:
-    st.markdown("### 🎛️ Filtres")
-    selected_segment = st.multiselect(
-        "Segment Client :",
-        options=df_seg['Segment'].unique(),
-        default=df_seg['Segment'].unique()
-    )
-    st.markdown("---")
-    st.caption("Projet Data Analytics • Module 8")
-
-filtered_seg = df_seg[df_seg['Segment'].isin(selected_segment)]
-
-# 6. Cartes KPI Personnalisées
+# 5. Cartes KPI Personnalisées
 c1, c2, c3, c4 = st.columns(4)
 
 with c1:
@@ -179,14 +153,14 @@ with c4:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# 7. Navigation par Onglets
+# 6. Navigation par Onglets (Données directes sans filtre)
 tab1, tab2, tab3 = st.tabs(["👥 Segmentation Client", "🚀 Performance Canaux", "🤖 IA & Allocations"])
 
 with tab1:
     col1, col2 = st.columns([3, 2])
     with col1:
         fig_ca = px.bar(
-            filtered_seg,
+            df_seg,
             x='Segment',
             y='CA_Total',
             color='Segment',
@@ -205,7 +179,7 @@ with tab1:
     with col2:
         st.markdown("<h4 style='color: #F8FAFC;'>Détails des Segments</h4>", unsafe_allow_html=True)
         st.dataframe(
-            filtered_seg[['Segment', 'Age_Moyen', 'Depense_Moyenne', 'CA_Total']],
+            df_seg[['Segment', 'Age_Moyen', 'Depense_Moyenne', 'CA_Total']],
             use_container_width=True,
             hide_index=True
         )
@@ -263,4 +237,3 @@ with tab3:
         )
         fig_pie.update_layout(paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color="#94A3B8"))
         st.plotly_chart(fig_pie, use_container_width=True)
-   
