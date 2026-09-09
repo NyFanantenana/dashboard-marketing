@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 1. Configuration globale
+
 st.set_page_config(
     page_title="Executive Marketing Dashboard",
     page_icon="⚡",
@@ -10,11 +10,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Thème Plotly sombre par défaut
+
 px.defaults.template = "plotly_dark"
 px.defaults.color_continuous_scale = px.colors.sequential.Purples
 
-# 2. Styles CSS Personnalisés (Dark Glassmorphism)
+
 st.markdown("""
 <style>
     /* Fond global */
@@ -80,7 +80,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 3. Chargement des données
+
 @st.cache_data
 def load_data():
     df_seg = pd.DataFrame({
@@ -108,11 +108,11 @@ def load_data():
 
 df_seg, df_mkt, df_models = load_data()
 
-# 4. En-tête Principal
+
 st.markdown("<h1 style='font-size: 2.4rem; font-weight: 800; margin-bottom: 0px;'>📊 Marketing & Customer Analytics</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #64748B; font-size: 1rem; margin-bottom: 25px;'>Vue d'ensemble stratégique et segmentation avancée des clients</p>", unsafe_allow_html=True)
 
-# 5. Cartes KPI Personnalisées
+
 c1, c2, c3, c4 = st.columns(4)
 
 with c1:
@@ -153,7 +153,7 @@ with c4:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# 6. Navigation par Onglets (Données directes sans filtre)
+
 tab1, tab2, tab3 = st.tabs(["👥 Segmentation Client", "🚀 Performance Canaux", "🤖 IA & Allocations"])
 
 with tab1:
