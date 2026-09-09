@@ -113,7 +113,7 @@ if menu == "Aperçu des KPIs":
 # ---------------------------------------------------------
 # MODULE 2 : SEGMENTATION K-MEANS
 # ---------------------------------------------------------
-elif menu == "Segmentation Client (K-Means)":
+elif menu == "Segmentation Client ":
     st.subheader("🎯 Analyse de la Segmentation Client (K-Means, K=3)")
 
     df_clusters = pd.DataFrame({
